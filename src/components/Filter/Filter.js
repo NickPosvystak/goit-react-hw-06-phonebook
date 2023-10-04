@@ -1,6 +1,13 @@
+// import { useState } from 'react';
 import css from './Filter.module.css';
 
 const Filter = ({ filter, onFilterChange }) => {
+  // const [filter, setFilter] = useState('');
+
+  //   const handleFilterChange = e => {
+  //     setFilter(e.target.value);
+  //   };
+  
   return (
     <input
       className={css.inputFilter}
