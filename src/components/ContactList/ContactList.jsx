@@ -2,23 +2,25 @@ import { ReactComponent as IconDelete } from '../../assets/delete.svg';
 import css from './ContactList.module.css';
 
 const ContactList = ({ contacts, onDeleteContact }) => {
+  const showContacts = Array.isArray(contacts) && contacts.length;
   return (
     <ul className={css.boxList}>
-      {contacts.map(contact => {
-        return (
-          <li key={contact.id} className={css.itemList}>
-            <span className={css.nameItem}>{contact.name}: </span>
-            <span>{contact.number}</span>
-            <button
-              type="button"
-              onClick={() => onDeleteContact(contact.id)}
-              className={css.btnDelete}
-            >
-              <IconDelete className={css.iconDelete} />
-            </button>
-          </li>
-        );
-      })}
+      {showContacts &&
+        contacts.map(({ id, name, number }) => {
+          return (
+            <li key={id} className={css.itemList}>
+              <span className={css.nameItem}>{name}: </span>
+              <span>{number}</span>
+              <button
+                type="button"
+                onClick={() => onDeleteContact(id)}
+                className={css.btnDelete}
+              >
+                <IconDelete className={css.iconDelete} />
+              </button>
+            </li>
+          );
+        })}
     </ul>
   );
 };
