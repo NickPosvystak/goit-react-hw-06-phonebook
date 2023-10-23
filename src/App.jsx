@@ -17,9 +17,10 @@ export const App = () => {
       alert(`${name} is already in contact.`);
       return;
     }
-
+  
     dispatch(addContact({ id: nanoid(), name, number }));
-  };
+ };
+
 
   return (
     <div className={css.box}>

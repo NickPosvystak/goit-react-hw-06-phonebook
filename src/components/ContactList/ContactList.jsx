@@ -10,10 +10,15 @@ const ContactList = () => {
   const dispatch = useDispatch();
 
   const getFilteredContacts = () => {
+    if (filter) {
+        const normalFilter = filter.toLowerCase();
     return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
-    );
-  };
+      contact.name.toLowerCase().includes(normalFilter)
+      );
+    }
+    return contacts;
+  
+    };
   const filteredContacts = getFilteredContacts();
 
   const showContacts = Array.isArray(contacts) && contacts.length > 0;
