@@ -1,26 +1,39 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { ReactComponent as IconDelete } from '../../assets/delete.svg';
 import css from './ContactList.module.css';
+import { deleteContact } from 'redux/contactsSlice';
 
-const ContactList = ({ contacts, onDeleteContact }) => {
-  const showContacts = Array.isArray(contacts) && contacts.length;
+const ContactList = () => {
+  const contacts = useSelector(state => state.contacts.contactsData);
+  const filter = useSelector(state => state.filter.filterData);
+
+  const dispatch = useDispatch();
+
+  const getFilteredContacts = () => {
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  };
+  const filteredContacts = getFilteredContacts();
+
+  const showContacts = Array.isArray(contacts) && contacts.length > 0;
+
   return (
     <ul className={css.boxList}>
       {showContacts &&
-        contacts.map(({ id, name, number }) => {
-          return (
-            <li key={id} className={css.itemList}>
-              <span className={css.nameItem}>{name}: </span>
-              <span>{number}</span>
-              <button
-                type="button"
-                onClick={() => onDeleteContact(id)}
-                className={css.btnDelete}
-              >
-                <IconDelete className={css.iconDelete} />
-              </button>
-            </li>
-          );
-        })}
+        filteredContacts.map(({ id, name, number }) => (
+          <li key={id} className={css.itemList}>
+            <span className={css.nameItem}>{name}: </span>
+            <span>{number}</span>
+            <button
+              type="button"
+              onClick={() => dispatch(deleteContact(id))}
+              className={css.btnDelete}
+            >
+              <IconDelete className={css.iconDelete} />
+            </button>
+          </li>
+        ))}
     </ul>
   );
 };

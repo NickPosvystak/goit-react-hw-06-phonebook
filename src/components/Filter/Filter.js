@@ -1,6 +1,16 @@
+import { useDispatch, useSelector } from 'react-redux';
 import css from './Filter.module.css';
+import { setFilter } from 'redux/filterSlice';
 
-const Filter = ({ filter, onFilterChange }) => {
+const Filter = () => {
+  const filter = useSelector(state => state.filter.filterData);
+
+  const dispatch = useDispatch();
+
+  const handleFilterChange = event => {
+    dispatch(setFilter(event.target.value));
+  };
+
   return (
     <input
       className={css.inputFilter}
@@ -8,7 +18,7 @@ const Filter = ({ filter, onFilterChange }) => {
       name="filter"
       placeholder="Search contacts"
       value={filter}
-      onChange={onFilterChange}
+      onChange={handleFilterChange}
     />
   );
 };
